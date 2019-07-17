@@ -11,24 +11,17 @@ import XCTest
 
 class POSTests: XCTestCase {
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testTaxViewModel() {
+        let viewModel = TaxViewModel()
+        
+        XCTAssertNotNil(viewModel.title(for: 0))
+        XCTAssertEqual(viewModel.numberOfSections(), 1)
+        XCTAssertEqual(viewModel.numberOfRows(in: 2), taxes.count)
+        let idx = IndexPath(row: 0, section: 0)
+        XCTAssertEqual(viewModel.labelForTax(at:idx),taxes[idx.row].label)
+        XCTAssertEqual(viewModel.accessoryType(at:idx),.checkmark)
+        viewModel.toggleTax(at:idx)
+        XCTAssertEqual(viewModel.accessoryType(at:idx),.none)
     }
 
 }

@@ -7,30 +7,28 @@
 //
 
 import Foundation
-public typealias Item = (name: String, category: String, price: NSDecimalNumber, isTaxExempt: Bool)
-public typealias Tax = (label: String, amount: NSDecimalNumber, isEnabled: Bool, type: String)
-public typealias Discount = (label: String, amount: NSDecimalNumber, isEnabled: Bool, type: String)
 
 public class Bill {
-    var items : [Item] = []
-    var discounts: Array<Discount>?
-    var taxes : Array<Tax>?
+    var items : [Item]
+    var discounts: [Discount]
+    var taxes : [Tax]
     
-    public init (_ applyedDiscounts:Array<Discount>,_ applyedTaxes:Array<Tax>){
-        discounts = applyedDiscounts
-        taxes = applyedTaxes
+    public init (_ items:Array<Item>,_ discounts:Array<Discount>,_ taxes:Array<Tax>){
+        self.items = items
+        self.discounts = discounts
+        self.taxes = taxes
     }
     
     public func updateItems (newItems:[Item])  {
         items = newItems
     }
     
-    public func setDiscounts(applyedDiscounts:Array<Discount>) {
-        discounts = applyedDiscounts
+    public func setDiscounts(discounts:Array<Discount>) {
+        self.discounts = discounts
     }
     
-    public func setTaxes(applyedTaxes:Array<Tax>) {
-        taxes = applyedTaxes
+    public func setTaxes(taxes:Array<Tax>) {
+        self.taxes = taxes
     }
     
     func getSubTotal() -> Decimal {
@@ -39,8 +37,8 @@ public class Bill {
     }
     
     func getAlcoholTaxAmount() -> Decimal {
-        let alcoholTaxs = taxes?.filter { $0.type == "alcohol" }
-        guard let alcoholTax = alcoholTaxs?.first else { return 0.0 }
+        let alcoholTaxs = taxes.filter { $0.type == .alcohol }
+        guard let alcoholTax = alcoholTaxs.first else { return 0.0 }
         if alcoholTax.isEnabled {
             return alcoholTax.amount as Decimal
         }
@@ -48,8 +46,8 @@ public class Bill {
     }
     
     func getTaxsAmount() -> Decimal {
-        let taxAmounts = taxes?.filter { $0.type != "alcohol" && $0.isEnabled == true }
-        return taxAmounts?.reduce(0) { $0 + ($1.amount as Decimal) } ?? 0.0
+        let taxAmounts = taxes.filter { $0.type != .alcohol && $0.isEnabled == true }
+        return taxAmounts.reduce(0) { $0 + ($1.amount as Decimal) }
     }
     
     func getAlcoholTax() -> Decimal {
@@ -66,29 +64,24 @@ public class Bill {
         return alcoholTax + otherTax
     }
     
-    
-    
     func getDiscountsTotal() -> Decimal {
         let subTotal = getSubTotal()
-        let percentDiscounts = discounts?.filter { $0.type == "percent"  && $0.isEnabled == true }
-        let discountPercent = percentDiscounts?.reduce(0) { $0 + ($1.amount as Decimal) } ?? 0.0
-        
-        let amountDiscounts = discounts?.filter { $0.type == "amount"  && $0.isEnabled == true }
-        let discountAmount = amountDiscounts?.reduce(0) { $0 + ($1.amount as Decimal) } ?? 0.0
-        
-        let percentDiscountAmount = subTotal * discountPercent
-        
-        if (subTotal >= discountAmount) {
-            return percentDiscountAmount + discountAmount
+        return discounts.reduce(0) { (result, discount) -> Decimal in
+            if (!discount.isEnabled){
+                return result
+            }
+            if (discount.type == .amount){
+                return result + 5
+            }
+            return result + ((subTotal - result) * (discount.amount as Decimal))
         }
-        return percentDiscountAmount
     }
     
     func gatBillTotal() -> Decimal {
         return getSubTotal() + getTaxesTotal() - getDiscountsTotal()
     }
     
-    public func getBillInfo() -> (subTotal:NSDecimalNumber,taxTotal:NSDecimalNumber,discountTotal:NSDecimalNumber,total:NSDecimalNumber){
+    public func getBill() -> (subTotal:NSDecimalNumber,taxTotal:NSDecimalNumber,discountTotal:NSDecimalNumber,total:NSDecimalNumber){
         return (getSubTotal()   as NSDecimalNumber,
                 getTaxesTotal() as NSDecimalNumber,
                 getDiscountsTotal() as NSDecimalNumber,

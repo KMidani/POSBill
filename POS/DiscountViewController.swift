@@ -8,12 +8,14 @@
 
 import Foundation
 import UIKit
+import POSBill
 
 class DiscountViewController: UITableViewController {
     let cellIdentifier = "Cell"
     
     let viewModel = DiscountViewModel()
     public var doneCallback : (() -> ())?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Discounts"
@@ -54,7 +56,8 @@ extension DiscountViewController {
     }
 }
 
-class DiscountViewModel {    
+class DiscountViewModel {
+    
     func title(for section: Int) -> String {
         return "Discounts"
     }
@@ -83,5 +86,16 @@ class DiscountViewModel {
     
     func toggleDiscount(at indexPath: IndexPath) {
         discounts[indexPath.row].isEnabled = !discounts[indexPath.row].isEnabled
+        updateSelectedDiscounts(discounts[indexPath.row])
     }
+    
+    func updateSelectedDiscounts(_ discount:Discount) {
+        if (selectedDiscount.contains(where: {$0.id == discount.id})){
+            selectedDiscount.removeAll(where: {$0.id == discount.id})
+        }else {
+            selectedDiscount.append(discount)
+        }
+    }
+    
+    
 }

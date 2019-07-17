@@ -108,7 +108,7 @@ extension RegisterViewController: UITableViewDataSource, UITableViewDelegate {
             cell.textLabel?.text = viewModel.labelForOrderItem(at: indexPath)
             cell.detailTextLabel?.text = viewModel.orderItemPrice(at: indexPath)
         }
-
+        
         return cell
     }
     
@@ -117,13 +117,13 @@ extension RegisterViewController: UITableViewDataSource, UITableViewDelegate {
             let indexPaths = [viewModel.addItemToOrder(at: indexPath)]
             orderTableView.insertRows(at: indexPaths, with: .automatic)
             // calculate bill totals
-        
+            
         } else if tableView == orderTableView {
             viewModel.toggleTaxForOrderItem(at: indexPath)
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         updateBillLabels()
-
+        
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -142,7 +142,7 @@ extension RegisterViewController: UITableViewDataSource, UITableViewDelegate {
             orderTableView.deleteRows(at: [indexPath], with: .automatic)
             // calculate bill totals
             updateBillLabels()
-
+            
         }
     }
 }
@@ -155,9 +155,12 @@ class RegisterViewModel {
         return formatter
     }()
     
-    var orderItems: [Item] = []
-    var bill = Bill(discounts,taxes)
-    
+    var orderItems: [Item]
+    var billCalc : Bill
+    init(){
+        orderItems = []
+        billCalc = Bill(orderItems,selectedDiscount,taxes)
+    }
     func menuCategoryTitle(in section: Int) -> String? {
         return categories[section].name
     }
@@ -189,7 +192,7 @@ class RegisterViewModel {
     
     func labelForOrderItem(at indexPath: IndexPath) -> String? {
         let item = orderItems[indexPath.row]
-       
+        
         if item.isTaxExempt {
             return "\(item.name) (No Tax)"
         } else {
@@ -205,31 +208,31 @@ class RegisterViewModel {
     func addItemToOrder(at indexPath: IndexPath) -> IndexPath {
         let item = categories[indexPath.section].items[indexPath.row]
         orderItems.append(item)
-        bill.updateItems(newItems: orderItems)
+        billCalc.updateItems(newItems: orderItems)
         return IndexPath(row: orderItems.count - 1, section: 0)
     }
     
     func removeItemFromOrder(at indexPath: IndexPath) {
         orderItems.remove(at: indexPath.row)
-        bill.updateItems(newItems: orderItems)
+        billCalc.updateItems(newItems: orderItems)
     }
     
     func toggleTaxForOrderItem(at indexPath: IndexPath) {
         orderItems[indexPath.row].isTaxExempt = !orderItems[indexPath.row].isTaxExempt
-        bill.updateItems(newItems: orderItems)
+        billCalc.updateItems(newItems: orderItems)
     }
     
     func getBillDetail() -> (subTotal:String?
-            ,taxTotal:String?,discountTotal:String?,total:String?) {
-       let billDetail = bill.getBillInfo()
-        return (formatter.string(from: billDetail.subTotal),
-                formatter.string(from: billDetail.taxTotal),
-                formatter.string(from: billDetail.discountTotal),
-                formatter.string(from: billDetail.total))
+        ,taxTotal:String?,discountTotal:String?,total:String?) {
+            let bill = billCalc.getBill()
+            return (formatter.string(from: bill.subTotal),
+                    formatter.string(from: bill.taxTotal),
+                    formatter.string(from: bill.discountTotal),
+                    formatter.string(from: bill.total))
     }
     
     func updateBill(){
-        bill.setTaxes(applyedTaxes: taxes)
-        bill.setDiscounts(applyedDiscounts: discounts)
+        billCalc.setTaxes(taxes: taxes)
+        billCalc.setDiscounts(discounts: selectedDiscount)
     }
 }

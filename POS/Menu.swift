@@ -9,11 +9,9 @@
 import Foundation
 import POSBill
 
-typealias Item = (name: String, category: String, price: NSDecimalNumber, isTaxExempt: Bool)
-
 func category(_ category: String) -> (String, NSDecimalNumber) -> Item {
     return { name, price in
-        return (name, category, price, false)
+        return Item(name, category, price, false)
     }
 }
 
@@ -46,13 +44,13 @@ let alcoholCategory = [
     alcohol("Wine", 7.00),
 ]
 
-let tax1 = (label: "Tax 1 (5%)", amount: 0.05, isEnabled: true, type:"provincial") as Tax
-let tax2 = (label: "Tax 2 (8%)", amount: 0.08, isEnabled: true, type:"federal") as Tax
-let alcoholTax = (label: "Alcohol Tax (10%)", amount: 0.10, isEnabled: true, type:"alcohol") as Tax
+let tax1 = Tax(label: "Tax 1 (5%)", amount: 0.05, isEnabled: true, type:.provincial)
+let tax2 = Tax(label: "Tax 2 (8%)", amount: 0.08, isEnabled: true, type:.federal)
+let alcoholTax = Tax(label: "Alcohol Tax (10%)", amount: 0.10, isEnabled: true, type:.alcohol)
 
-let discount5Dollars = (label: "$5.00", amount: 5.00, isEnabled: false , type:"amount") as Discount
-let discount10Percent = (label: "10%", amount: 0.10, isEnabled: false , type:"percent") as Discount
-let discount20Percent = (label: "20%", amount: 0.20, isEnabled: false , type:"percent") as Discount
+let discount5Dollars = Discount(label: "$5.00", amount: 5.00, isEnabled: false , type:.amount)
+let discount10Percent = Discount(label: "10%", amount: 0.10, isEnabled: false , type:.percent)
+let discount20Percent = Discount(label: "20%", amount: 0.20, isEnabled: false , type:.percent)
 
 var taxes = [
     tax1,
@@ -65,6 +63,8 @@ var discounts = [
     discount10Percent,
     discount20Percent,
 ]
+
+var selectedDiscount : [Discount] = []
 
 var categories = [
     (name: "Appetizers", items: appetizersCategory),

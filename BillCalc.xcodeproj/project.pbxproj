@@ -21,6 +21,7 @@
 		BC8781F922DB7E2100461D02 /* POSBill.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC8781E422DB7E2000461D02 /* POSBill.framework */; };
 		BC8781FA22DB7E2100461D02 /* POSBill.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BC8781E422DB7E2000461D02 /* POSBill.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BC87820322DB7F6E00461D02 /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC87820222DB7F6E00461D02 /* Bill.swift */; };
+		FC2B906A22DE876B00E1C9A2 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2B906922DE876B00E1C9A2 /* Models.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		BC8781F322DB7E2100461D02 /* POSBillTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POSBillTests.swift; sourceTree = "<group>"; };
 		BC8781F522DB7E2100461D02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC87820222DB7F6E00461D02 /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
+		FC2B906922DE876B00E1C9A2 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +204,7 @@
 				BC8781E622DB7E2100461D02 /* POSBill.h */,
 				BC8781E722DB7E2100461D02 /* Info.plist */,
 				BC87820222DB7F6E00461D02 /* Bill.swift */,
+				FC2B906922DE876B00E1C9A2 /* Models.swift */,
 			);
 			path = POSBill;
 			sourceTree = "<group>";
@@ -333,13 +336,16 @@
 				TargetAttributes = {
 					6AEC0FED226F8717005F8B6B = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 					6AEC1000226F8719005F8B6B = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 						TestTargetID = 6AEC0FED226F8717005F8B6B;
 					};
 					6AEC100B226F8719005F8B6B = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 						TestTargetID = 6AEC0FED226F8717005F8B6B;
 					};
 					BC8781E322DB7E2000461D02 = {
@@ -446,6 +452,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC2B906A22DE876B00E1C9A2 /* Models.swift in Sources */,
 				BC87820322DB7F6E00461D02 /* Bill.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -636,7 +643,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TouchBistro.POS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -655,7 +662,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TouchBistro.POS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -675,7 +682,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TouchBistro.POSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/POS.app/POS";
 			};
@@ -696,7 +703,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TouchBistro.POSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/POS.app/POS";
 			};
@@ -716,7 +723,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TouchBistro.POSUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = POS;
 			};
@@ -736,7 +743,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TouchBistro.POSUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = POS;
 			};
