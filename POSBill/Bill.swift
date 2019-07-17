@@ -8,26 +8,59 @@
 
 import Foundation
 
-public class Bill {
+/// Bill is struct to represnt the POS bill, and it depending on three inputs.
+///
+/// Iputs
+/// list ot Items,
+/// list ot Discount (and this should be Ordered),
+/// list ot Tax
+/// example to creat Bill:
+///
+///     let items = [Item]
+///     let discounts = [Discount]
+///     let taxs = [Tax]
+///     let bill = Bill(items,discounts,taxes)
+///     let billResults = bill.getBill()
+///
+/// the getBill() function return a tupple with the calculated bill
+/// subtotal, discount ,tax , Total
+///
+public struct Bill {
     var items : [Item]
     var discounts: [Discount]
     var taxes : [Tax]
     
+    /// the bill constractor
+    /// - Parameters:
+    ///   - items: List of Items
+    ///   - discounts: List of discounts element to apply on the bill,
+    ///     this list should be ordered in the sequense of the discounts applied
+    ///   - taxes: List of taxes element to apply on the bill,
     public init (_ items:Array<Item>,_ discounts:Array<Discount>,_ taxes:Array<Tax>){
         self.items = items
         self.discounts = discounts
         self.taxes = taxes
     }
     
-    public func updateItems (newItems:[Item])  {
+    /// update the Items list in the bill
+    /// - Parameters:
+    ///   - items: List of Items
+    public mutating func updateItems (newItems:[Item])  {
         items = newItems
     }
     
-    public func setDiscounts(discounts:Array<Discount>) {
+    /// set the Discount list in the bill
+    /// the Discount list should be ordered
+    /// - Parameters:
+    ///   - discounts: List of Discount
+    public mutating func setDiscounts(discounts:Array<Discount>) {
         self.discounts = discounts
     }
     
-    public func setTaxes(taxes:Array<Tax>) {
+    /// set the Tax list in the bill
+    /// - Parameters:
+    ///   - taxes: List of Tax
+    public mutating func setTaxes(taxes:Array<Tax>) {
         self.taxes = taxes
     }
     
@@ -81,10 +114,21 @@ public class Bill {
         return getSubTotal() + getTaxesTotal() - getDiscountsTotal()
     }
     
-    public func getBill() -> (subTotal:NSDecimalNumber,taxTotal:NSDecimalNumber,discountTotal:NSDecimalNumber,total:NSDecimalNumber){
-        return (getSubTotal()   as NSDecimalNumber,
-                getTaxesTotal() as NSDecimalNumber,
-                getDiscountsTotal() as NSDecimalNumber,
-                gatBillTotal()  as NSDecimalNumber)
+    
+    /// update the Items list in the bill
+    /// - Returns:
+    ///   bill: a tupple of calculated bill results
+    /// (subTotal: NSDecimalNumber,
+    ///  taxTotal: NSDecimalNumber,
+    ///  discountTotal: NSDecimalNumber,
+    ///  total:NSDecimalNumber)
+    public func getBill() -> (subTotal: NSDecimalNumber,
+        taxTotal: NSDecimalNumber,
+        discountTotal: NSDecimalNumber,
+        total: NSDecimalNumber){
+            return (getSubTotal()   as NSDecimalNumber,
+                    getTaxesTotal() as NSDecimalNumber,
+                    getDiscountsTotal() as NSDecimalNumber,
+                    gatBillTotal()  as NSDecimalNumber)
     }
 }
