@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Bill is struct to represnt the POS bill, and it depending on three inputs.
+/// Bill is struct to represent the POS bill, and it depending on three inputs.
 ///
 /// Iputs
 /// list ot Items,
@@ -22,7 +22,7 @@ import Foundation
 ///     let bill = Bill(items,discounts,taxes)
 ///     let billResults = bill.getBill()
 ///
-/// the getBill() function return a tupple with the calculated bill
+/// the getBill() function return a tuple with the calculated bill
 /// subtotal, discount ,tax , Total
 ///
 public struct Bill {
@@ -30,7 +30,7 @@ public struct Bill {
     var discounts: [Discount]
     var taxes : [Tax]
     
-    /// the bill constractor
+    /// the bill constructor
     /// - Parameters:
     ///   - items: List of Items
     ///   - discounts: List of discounts element to apply on the bill,
@@ -42,14 +42,14 @@ public struct Bill {
         self.taxes = taxes
     }
     
-    /// update the Items list in the bill
+    /// Update the Items list in the bill
     /// - Parameters:
     ///   - items: List of Items
     public mutating func updateItems (newItems:[Item])  {
         items = newItems
     }
     
-    /// set the Discount list in the bill
+    /// Set the Discount list in the bill
     /// the Discount list should be ordered
     /// - Parameters:
     ///   - discounts: List of Discount
@@ -57,7 +57,7 @@ public struct Bill {
         self.discounts = discounts
     }
     
-    /// set the Tax list in the bill
+    /// Set the Tax list in the bill
     /// - Parameters:
     ///   - taxes: List of Tax
     public mutating func setTaxes(taxes:Array<Tax>) {
@@ -115,9 +115,9 @@ public struct Bill {
     }
     
     
-    /// update the Items list in the bill
+    /// Update the Items list in the bill
     /// - Returns:
-    ///   bill: a tupple of calculated bill results
+    ///   bill: a tuple of calculated bill results
     /// (subTotal: NSDecimalNumber,
     ///  taxTotal: NSDecimalNumber,
     ///  discountTotal: NSDecimalNumber,
